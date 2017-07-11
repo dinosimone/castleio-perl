@@ -88,10 +88,9 @@ You can also look for information at:
 
 ## Disclaimer
 
-This project and the code therein was not created by and is not supported by WealthForge.
+This project and the code therein was not created by and is not supported by Castle.
 
 
 ## Author
 
 Dino Simone (dino@simone.is)
-https://www.linkedin.com/in/dinosimone/
