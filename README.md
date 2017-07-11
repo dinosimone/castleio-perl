@@ -94,3 +94,4 @@ This project and the code therein was not created by and is not supported by Wea
 ## Author
 
 Dino Simone (dino@simone.is)
+https://www.linkedin.com/in/dinosimone/
