@@ -22,12 +22,12 @@ WebService::CastleIO - Castle.io API client
 
 =head1 VERSION
 
-Version 0.01
+Version 1.00
 
 =cut
 
 
-our $VERSION = '0.01';
+our $VERSION = '1.00';
 
 
 
@@ -81,11 +81,119 @@ has debug => (
 Castle detects and mitigates account takeover in web and mobile apps. This is a third party API client built for the Castle.io API.
 
 
+=head1 CONFIGURATION
+ 
+    use WebService::CastleIO;
+ 
+    my $castle = WebService::CastleIO->new(
+        api_secret => 'sRq3Zmzpxwu6eDXiYCFB3xyfi4ZnVjnn',
+        cookie_id  => 'abcd',
+        ip_address => '24.61.128.172',
+        headers    => JSON->new->allow_nonref->utf8->encode({'User-Agent' => 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:54.0) Gecko/20100101 Firefox/54.0'}),
+        source     => 'backend',
+        debug      => 1
+     );
+
+
 =head1 SUBROUTINES/METHODS
+
+
+=head2 track
+
+Track lets you record security-related actions your users perform. Events are processed 
+asynchronously to return as quickly as possible.
+
+    my $event_result = $castle->track(
+        data => {user_id => 'dummy', name => '$login.succeeded', properties => {threat => 'Large', whatever => 'made up'}}
+    );
+
+=cut
+
+sub track {
+  my ($self, %params) = validated_hash(
+    \@_,
+    data    => {isa => 'Maybe[HashRef]'},
+  );
+
+  say '[track] Create new event' if $self->debug;
+
+  $self->_call(endpoint => 'track', args => \%params, method => 'POST');
+}
+
+
+
+=head2 authenticate
+
+Authenticate is processed synchronous and returns returns an action of the types approve, challenge or deny.
+
+    my $auth_result = $castle->authenticate(
+        data => {user_id => 'dummywriter', name => '$login.succeeded'},
+    );
+
+
+=cut
+
+sub authenticate {
+  my ($self, %params) = validated_hash(
+    \@_,
+    data => {isa => 'Maybe[HashRef]'},
+  );
+
+  say '[authenticate] Authenticate user' if $self->debug;
+
+  $self->_call(endpoint => 'authenticate', args => \%params, method => 'POST');
+}
+
+
+
+
+=head2 identify
+
+User updates are processed asynchronously to return as quickly as possible.
+
+    my $identify_result = $castle->identify(
+        data => {user_id => 'dummywriter', traits => {'foo' => 'bar'}},
+    );
+
+=cut
+
+sub identify {
+  my ($self, %params) = validated_hash(
+    \@_,
+    data => {isa => 'Maybe[HashRef]'},
+  );
+
+  say '[identify] Identify user' if $self->debug;
+
+  $self->_call(endpoint => 'identify', args => \%params, method => 'POST');
+}
+
+
+
+=head2 review
+
+Reviews lets you fetch the context for a user to review anomalous account activity.
+
+    my $reviews_result = $castle->review(review_id => 12356789);
+
+=cut
+
+sub review {
+  my ($self, %params) = validated_hash(
+    \@_,
+    review_id => {isa => 'Int'}
+  );
+
+  say '[review] Review user activity' if $self->debug;
+
+  $self->_call(endpoint => "reviews/$params{review_id}", args => \%params, method => 'GET');
+}
 
 
 
 =head2 _call
+
+Private method that makes call to API web service.
 
 =cut
 
@@ -130,111 +238,36 @@ sub _call {
 }
 
 
+
 =head2 _client_user_agent
 
-Return user agent info
+Private method to return user agent.
 
 =cut
 
 sub _client_user_agent {
     JSON->new->allow_nonref->utf8->encode({
-      bindings_version => $VERSION, 
+      bindings_version => $VERSION,
       lang             => 'perl',
       publisher        => 'castle',
-      uname            => `uname -a` 
-    }); 
+      uname            => `uname -a`
+    });
 }
 
 
+  
 =head2 _json_to_object
 
-Converts JSON result to object
+Private method that converts JSON result to object
 
 =cut
-
+  
 sub _json_to_object {
   my $self = shift;
   my $json = shift;
   JSON->new->allow_nonref->utf8->decode($json);
-}
+} 
 
-
-
-=head2 track
-
-Track lets you record security-related actions your users perform. Events are processed 
-asynchronously to return as quickly as possible.
-
-=cut
-
-sub track {
-  my ($self, %params) = validated_hash(
-    \@_,
-    data    => {isa => 'Maybe[HashRef]'},
-  );
-
-  say '[track] Create new event' if $self->debug;
-
-  $self->_call(endpoint => 'track', args => \%params, method => 'POST');
-}
-
-
-
-=head2 authenticate
-
-Authenticate is processed synchronous and returns returns an action of the types approve, challenge or deny.
-
-=cut
-
-sub authenticate {
-  my ($self, %params) = validated_hash(
-    \@_,
-    data => {isa => 'Maybe[HashRef]'},
-  );
-
-  say '[authenticate] Authenticate user' if $self->debug;
-
-  $self->_call(endpoint => 'authenticate', args => \%params, method => 'POST');
-}
-
-
-
-
-=head2 identify
-
-User updates are processed asynchronously to return as quickly as possible.
-
-=cut
-
-sub identify {
-  my ($self, %params) = validated_hash(
-    \@_,
-    data => {isa => 'Maybe[HashRef]'},
-  );
-
-  say '[identify] Identify user' if $self->debug;
-
-  $self->_call(endpoint => 'identify', args => \%params, method => 'POST');
-}
-
-
-
-=head2 review
-
-Reviews lets you fetch the context for a user to review anomalous account activity.
-
-=cut
-
-sub review {
-  my ($self, %params) = validated_hash(
-    \@_,
-    review_id => {isa => 'Int'}
-  );
-
-  say '[review] Review user activity' if $self->debug;
-
-  $self->_call(endpoint => "reviews/$params{review_id}", args => \%params, method => 'GET');
-}
 
 
 
