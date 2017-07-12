@@ -1,6 +1,6 @@
 package WebService::CastleIO;
 
-use 5.006;
+use 5.10.0;
 use strict;
 use warnings;
 use feature 'switch';

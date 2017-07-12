@@ -18,12 +18,6 @@ no_index:
     - t
     - inc
 requires:
-  perl: '5.10.0'
-  JSON: "0"
-  REST::Client: "0",
-  MIME::Base64: "0",
-  Moose: "0",
-  Moose::Util::TypeConstraints: "0",
-  MooseX::Params::Validate: "0"
-  version: '1.00'
+  perl: '5.006'
+version: '1.00'
 x_serialization_backend: 'CPAN::Meta::YAML version 0.018'

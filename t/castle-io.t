@@ -5,7 +5,6 @@ use strict;
 use warnings;
 use Test::More;
 use WebService::CastleIO;
-use Test::VCR::LWP;
 use JSON;
 
 
