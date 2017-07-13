@@ -25,21 +25,21 @@ my $event_result = $castle->track(
     data    => {user_id => 'dummy', name => '$login.succeeded', properties => {threat => 'Large', whatever => 'made up'}}
 );
 
-ok($event_result == 204, "Create event");
+ok($event_result =~ /^20/, "Create event");
 
 
 my $auth_result = $castle->authenticate(
     data => {user_id => 'dummywriter', name => '$login.succeeded'},
 );
 
-ok($auth_result == 201, "Authentication approved");
+ok($auth_result =~ /^20/, "Authentication approved");
 
 
 my $identify_result = $castle->identify(
     data => {user_id => 'dummywriter', traits => {'foo' => 'bar'}},
 );
  
-ok($identify_result == 204, "Identify user");
+ok($identify_result =~ /^20/, "Identify user");
 
 
 my $reviews_result = $castle->review(review_id => 12356789);
