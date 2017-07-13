@@ -7,10 +7,7 @@ Castle detects and mitigates account takeover in web and mobile apps. This is a 
 
 To install this module, run the following commands:
 
-    perl Makefile.PL
-    make
-    make test
-    make install
+    cpanm WebService::CastleIO
 
 
 ## Configuration

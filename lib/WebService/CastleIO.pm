@@ -27,7 +27,7 @@ Version 1.01
 =cut
 
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 
 
 
