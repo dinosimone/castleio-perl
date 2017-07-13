@@ -315,9 +315,6 @@ L<http://search.cpan.org/dist/WebService-CastleIO/>
 =back
 
 
-=head1 ACKNOWLEDGEMENTS
-
-
 =head1 LICENSE AND COPYRIGHT
 
 Copyright 2017 Dino Simone - dinosimone.com
