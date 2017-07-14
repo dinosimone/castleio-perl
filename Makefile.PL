@@ -10,7 +10,7 @@ WriteMakefile(
     ABSTRACT_FROM    => 'lib/WebService/CastleIO.pm',
     LICENSE          => 'mit',
     PL_FILES         => {},
-    MIN_PERL_VERSION => 5.10,
+    MIN_PERL_VERSION => 5.010001,
     CONFIGURE_REQUIRES => {
         'ExtUtils::MakeMaker' => 0,
     },
