@@ -22,12 +22,12 @@ WebService::CastleIO - Castle.io API client
 
 =head1 VERSION
 
-Version 1.01
+Version 1.03
 
 =cut
 
 
-our $VERSION = '1.02';
+our $VERSION = '1.03';
 
 
 
