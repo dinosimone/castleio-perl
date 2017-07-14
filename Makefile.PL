@@ -24,8 +24,12 @@ WriteMakefile(
 	'MooseX::Params::Validate' => 0
     },
     PREREQ_PM => {
-        #'ABC'              => 1.6,
-        #'Foo::Bar::Module' => 5.0401,
+        'JSON' => 0,
+        'REST::Client' => 0,
+        'MIME::Base64' => 0,
+        'Moose' => 0,
+        'Moose::Util::TypeConstraints' => 0,
+        'MooseX::Params::Validate' => 0	    
     },
     dist  => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean => { FILES => 'WebService-CastleIO-*' },
